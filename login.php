@@ -1,41 +1,41 @@
 <!DOCTYPE html>
-<html lang="pt_BR">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/estilo.css">
+    <link rel="stylesheet" href="css/loginstyle.css">">
     <title>Pagina inicial</title>
+    <link rel="icon" href="css/Senac.png" type="image">
 </head>
 
 <body class="corpo">
-    <img class="img" src="../imagem/imagem1.png" />
-    <main class="formulario">
-        <form class="formulario-campos" action="../src/controller/auth_login.php" method="POST">
-            <h1 class="titulo-form">BEM-VINDO</h1>
-            <div class="form-input">
-                
-                <label for="email">E-mail:</label>
-                <input type="text" name="email" id="E-mail" placeholder="Exemple@gmail.com">
-            </div>
-
-            <div class="form-input">
-        
-                <label for="senha">Senha:</label>
-                <input type="password" id="senha" name="senha" placeholder="Digite sua senha">
-                
-            </div>
-        <div class="links-form">
-            <a class="form-label" for="Esqueci a senha">Esqueci a senha</a>
-            <a href="views_cadastro.php" class="criarconta">Criar Conta</a>
-            
-
+    <form action="src/auth_login.php" method="post">
+    <section class="login">
+        <div class="loginsecao">
+            <div class="loginheader">
+                <div class="logintitulo">
+            <img src="css/Senac.png" height="40">
+            <h2>Sistema Senac</h2>
         </div>
+        <div class="logintextos">
+            <p class="logindesc">Gerenciador de Chaves</p>
+        </div>
+    </div>
+        
+        <div class="loginarea">
+            
+            <p class="loginareatexto">Entre na sua conta</p>
 
-            <button type="submit">Entrar</button>
-        </form>
-
-    </main>
+            <div class="logindigitar">
+                <input type="text" name="cpf" id="cpf" placeholder="CPF" required>
+                <input type="password" name="senha" id="senha" placeholder="Senha" required>
+            <div class="esqueceuasenhasecao">
+                <a href="" class="esqueceuasenha">Esqueceu a senha?</a></div>
+            </div>
+        </div>
+        <button type="submit" class="loginbotao">Entrar</button>
+    </section>
+    </form>
 </body>
-
 </html>

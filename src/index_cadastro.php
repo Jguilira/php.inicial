@@ -1,25 +1,25 @@
 <?php 
-//Lógica de inserção na tabela professor
-require_once ('../../config/dbConnect.php');
+// Inserindo cargo master ou porteiro
+require_once ('../config.php');
 
 if($_SERVER['REQUEST_METHOD'] == "POST"){
     $nome = filter_input(INPUT_POST, 'nome');
-    $email = filter_input(INPUT_POST, 'email');
-    $telefone = filter_input(INPUT_POST, 'telefone');
+    $cpf = filter_input(INPUT_POST, 'cpf');
+    $cargo = filter_input(INPUT_POST, 'cargo');
     $senha = filter_input(INPUT_POST, 'senha');
 
 
     $senha = password_hash($senha, PASSWORD_ARGON2ID);
 
-    $insertProf = "INSERT INTO func VALUES(null, :nome, :contato, :cod_tip_func, :email, :senha)";
-    $req = $dbh->prepare($insertProf);
+    $insertcargo = "INSERT INTO usuarios VALUES(null, :nome, :cpf, :senha, :cargo)";
+    $req = $dbh->prepare($insertcargo);
     $req->bindValue(':nome', $nome);
-    $req->bindValue(':contato', $telefone);
-    $req->bindValue(':cod_tip_func', 1);
-    $req->bindValue(':email', $email);
+    $req->bindValue(':cpf', $cpf);
     $req->bindValue(':senha', $senha);
+    $req->bindValue(':cargo', $cargo);
     if($req->execute()){
-        header("Location: ../../views/login.php?sucesso=1");
+
+        header("location: ../login.php?sucesso=1");
 
     }else{
         header("Location: ../../views/views_cadastro.php?sucesso=0");
@@ -27,6 +27,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 
 }else{
     header("Location: ../../views/views_cadastro.php");
+    exit;
 }
 
 

@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../css/styles.css"> 
 </head>
 <body>
-    <form class="container" action="../src/controller/index_cadastro.php" method="POST">
+    <form class="container" action="../php.inicial/src/index_cadastro.php" method="POST">
         <h1>CADASTRO</h1>
         <div class="row">
             <div class="retangulo-container">
@@ -17,16 +17,16 @@
                 <input class="retangulo" type="text" placeholder="Ex: João Silva" name="nome">
             </div>
             <div class="retangulo-container">
-                <div class="label">Email:</div>
-                <input class="retangulo" type="email" placeholder="Ex: exemplo@dominio.com" name="email">
+                <div class="label">CPF:</div>
+                <input class="retangulo" type="text" placeholder="Ex: 123.456.789-12" name="cpf">
             </div>
            
         </div>
         <div class="row">
 
             <div class="retangulo-container">
-                <div class="label">Telefone:</div>
-                <input class="retangulo" type="tel" placeholder="Ex: (11) 98765-4321" name="telefone">
+                <div class="label">Cargo:</div>
+                <input class="retangulo" type="text" placeholder="Ex: Master/Porteiro" name=cargo>
             </div>
             <div class="retangulo-container">
                 <div class="label">Senha:</div>
