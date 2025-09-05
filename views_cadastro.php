@@ -1,44 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagina de Login</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/styles.css"> 
+    <link rel="stylesheet" href="css/cadastro.css">
+    <title>Cadastro - Sistema SENAC</title>
+    <link rel="icon" href="css/Senac.png" type="image/x-icon">
 </head>
 <body>
-    <form class="container" action="../php.inicial/src/index_cadastro.php" method="POST">
-        <h1>CADASTRO</h1>
-        <div class="row">
-            <div class="retangulo-container">
-                <div class="label">Nome:</div>
-                <input class="retangulo" type="text" placeholder="Ex: João Silva" name="nome">
+    <header>
+        <div class="header">
+            <div class="headeresq">
+                <h2>Sistema SENAC</h2>
+                <p>Gerenciador de Chaves</p>
             </div>
-            <div class="retangulo-container">
-                <div class="label">CPF:</div>
-                <input class="retangulo" type="text" placeholder="Ex: 123.456.789-12" name="cpf">
-            </div>
-           
-        </div>
-        <div class="row">
-
-            <div class="retangulo-container">
-                <div class="label">Cargo:</div>
-                <input class="retangulo" type="text" placeholder="Ex: Master/Porteiro" name=cargo>
-            </div>
-            <div class="retangulo-container">
-                <div class="label">Senha:</div>
-                <input class="retangulo" type="password" placeholder="Ex: ***" name="senha">
+            <div class="headerdir">
+                <div class="headerdirtexto">
+                <h2>Nome do usuario</h2>
+                <p>Porteiro/Master</p></div>
+                <div class="headerdirimg">
+                    <img src="User.jpg" alt="Foto do usuário" height="60">
+                </div>
             </div>
         </div>
-        <button class="button" type="submit">ENTRAR</button>
+    </header>
+    <form class="formulario" action="src/auth_cadastro.php" method="POST">
+        <h1 class="formularioheader">Cadastro do Usuário</h1>
+        <div class="areacadastro">
+        <input type="text" placeholder="Nome completo" id="nome" name="nome" required>
+        <select name="cargo" id="cargo" required>
+            <option disabled selected>Cargo</option>
+            <option value="master">Master</option>
+            <option value="porteiro">Porteiro</option>
+        </select>
+        <input type="text" maxlength="14" name="cpf" id="cpf" placeholder="CPF" required>
+        <input type="password" minlength="6" name="senha" id="senha" placeholder="senha" required>
+    <p class="formulariotextosenha">A senha precisa ter no mínimo 6 caracteres, um número e um símbolo especial</p></div>
+        <input class="botaocadastrar" type="submit" value="Cadastrar">
     </form>
-    
-    <img class="img" src="../imagem/image 7.png" alt="Logo Senac">
-
-    
-
 </body>
-</html> 
+</html>

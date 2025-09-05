@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/loginstyle.css">">
+    <link rel="stylesheet" href="css/loginstyle.css">
     <title>Pagina inicial</title>
     <link rel="icon" href="css/Senac.png" type="image">
 </head>
 
 <body class="corpo">
-    <form action="src/auth_login.php" method="post">
+    <form action="src/auth_login.php" method="POST">
     <section class="login">
         <div class="loginsecao">
             <div class="loginheader">
