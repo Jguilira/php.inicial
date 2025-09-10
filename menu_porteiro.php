@@ -8,10 +8,36 @@
     <link rel="icon" href="css/Senac.png" type="image">
 </head>
 <body>
-    <?php 
-        require_once ('config.php');
-        
+    <?php
+    require_once('config.php');
+    session_start();
+    $nome = $_SESSION['nome'];
     ?>
+    <?php
+        require_once('config.php'); 
+
+         // Total de chaves
+        $sqlTotal = "SELECT COUNT(*) as total FROM chaves";
+        $total = $dbh->query($sqlTotal)->fetch(PDO::FETCH_ASSOC)['total'];
+
+        // Chaves disponíveis
+        $sqlDisponiveis = "SELECT COUNT(*) as disponiveis FROM chaves WHERE situacao = 'Disponível'";
+        $disponiveis = $dbh->query($sqlDisponiveis)->fetch(PDO::FETCH_ASSOC)['disponiveis'];
+
+        // Chaves emprestadas
+        $sqlEmprestadas = "SELECT COUNT(*) as emprestadas FROM chaves WHERE situacao = 'Emprestada'";
+        $emprestadas = $dbh->query($sqlEmprestadas)->fetch(PDO::FETCH_ASSOC)['emprestadas'];
+
+        // Empréstimos ativos (ou seja, movimentações de retirada sem devolução ainda)
+        $sqlAtivos = "SELECT COUNT(*) as ativos 
+                    FROM movimentacoes m1
+                    LEFT JOIN movimentacoes m2 
+                        ON m1.id_chave = m2.id_chave 
+                        AND m2.tipo = 'devolucao' 
+                        AND m2.data_hora > m1.data_hora
+                    WHERE m1.tipo = 'retirada' AND m2.id_mov IS NULL";
+        $ativos = $dbh->query($sqlAtivos)->fetch(PDO::FETCH_ASSOC)['ativos'];
+?> 
     <header>
         <div class="headerporteiro">
             <div class="headerporteiroesq">
@@ -20,7 +46,7 @@
             </div>
             <div class="headerporteirodir">
                 <div class="headerporteirodirtexto">
-                <h2>Nome do Porteiro</h2>
+                <h2><?= $nome ?></h2>
                 <p>Porteiro</p></div>
                 <div class="headerporteirodirimg">
                     <img src="User.jpg" alt="Foto do usuário" height="60">
@@ -32,19 +58,19 @@
         <div class="secao1status">
             <div class="secao1status1">
                 <p>Total de Chaves</p>
-                <h2>num</h2>
+                <h2><?=$total?></h2>
             </div>
             <div class="secao1status2">
                 <p>Disponíveis</p>
-                <h2>num</h2>
+                <h2><?=$disponiveis?></h2>
             </div>
             <div class="secao1status3">
                 <p>Emprestadas</p>
-                <h2>num</h2>
+                <h2><?=$emprestadas?></h2>
             </div>
             <div class="secao1status4">
                 <p>Empréstimos Ativos</p>
-                <h2>num</h2>
+                <h2><?=$ativos?></h2>
             </div>
         </div>
     </section>

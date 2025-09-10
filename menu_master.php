@@ -8,6 +8,64 @@
     <link rel="icon" href="css/Senac.png" type="image">
 </head>
 <body>
+    <?php
+    require_once('config.php');
+    session_start();
+
+    if (!isset($_SESSION['id_usuario'])) {
+        header("Location: login.php");
+        exit();
+    }
+
+    $nome = $_SESSION['nome'];
+    ?>
+    <?php
+        require_once('config.php'); 
+
+         // Total de chaves
+        $sqlTotal = "SELECT COUNT(*) as total FROM chaves";
+        $total = $dbh->query($sqlTotal)->fetch(PDO::FETCH_ASSOC)['total'];
+
+        // Chaves disponíveis
+        $sqlDisponiveis = "SELECT COUNT(*) as disponiveis FROM chaves WHERE situacao = 'Disponível'";
+        $disponiveis = $dbh->query($sqlDisponiveis)->fetch(PDO::FETCH_ASSOC)['disponiveis'];
+
+        // Chaves emprestadas
+        $sqlEmprestadas = "SELECT COUNT(*) as emprestadas FROM chaves WHERE situacao = 'Emprestada'";
+        $emprestadas = $dbh->query($sqlEmprestadas)->fetch(PDO::FETCH_ASSOC)['emprestadas'];
+
+        // Empréstimos ativos (ou seja, movimentações de retirada sem devolução ainda)
+        $sqlAtivos = "SELECT COUNT(*) as ativos 
+                    FROM movimentacoes m1
+                    LEFT JOIN movimentacoes m2 
+                        ON m1.id_chave = m2.id_chave 
+                        AND m2.tipo = 'devolucao' 
+                        AND m2.data_hora > m1.data_hora
+                    WHERE m1.tipo = 'retirada' AND m2.id_mov IS NULL";
+        $ativos = $dbh->query($sqlAtivos)->fetch(PDO::FETCH_ASSOC)['ativos'];
+?> 
+<?php
+
+        $sql = "SELECT 
+            c.codigo_chave,
+            c.descricao,
+            u.nome AS usuario,
+            DATE_FORMAT(m1.data_hora, '%d-%m-%Y, %H:%i:%s') AS emprestada,
+            DATE_FORMAT(m2.data_hora, '%d-%m-%Y, %H:%i:%s') AS devolvida
+        FROM movimentacoes m1
+        LEFT JOIN movimentacoes m2 
+            ON m1.id_chave = m2.id_chave 
+            AND m2.tipo = 'devolucao' 
+            AND m2.data_hora > m1.data_hora
+        LEFT JOIN usuarios u ON u.id_usuario = m1.id_usuario
+        LEFT JOIN chaves c ON c.id_chave = m1.id_chave
+        WHERE m1.tipo = 'retirada'
+        GROUP BY m1.id_mov
+        ORDER BY m1.data_hora DESC";
+
+        $stmt = $dbh->query($sql);
+        $historico = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
     <header>
         <div class="header">
             <div class="headeresq">
@@ -16,7 +74,7 @@
             </div>
             <div class="headerdir">
                 <div class="headerdirtexto">
-                <h2>Usuário Antônio Fernando</h2>
+                <h2><?=$nome?></h2>
                 <p>Master</p></div>
                 <div class="headerdirimg">
                     <img src="User.jpg" alt="Foto do usuário" height="60">
@@ -28,95 +86,95 @@
         <div class="secao1status">
             <div class="secao1status1">
                 <p>Total de Chaves</p>
-                <h2>num</h2>
+                <h2><?=$total?></h2>
             </div>
             <div class="secao1status2">
                 <p>Disponíveis</p>
-                <h2>num</h2>
+                <h2><?=$disponiveis?></h2>
             </div>
             <div class="secao1status3">
                 <p>Emprestadas</p>
-                <h2>num</h2>
+                <h2><?=$emprestadas?></h2>
             </div>
             <div class="secao1status4">
                 <p>Empréstimos Ativos</p>
-                <h2>num</h2>
+                <h2><?=$ativos?></h2>
             </div>
         </div>
     </section>
     <section class="secao2">
         <div class="secao2esq">
-            <div class="secao2esqheader">
-            <h2>Gerenciar Chaves</h2>
-        <p class="secao2esqheaderbotao"><b>+ Adicionar Chave</b></p></div>
-            <div class="secao2esqitens">
-                <div class="secao2esqobj">
-                <div class="secao2esqitenstexto">
-                    <h2>001</h2>
-                    <p>Missingno</p>
-                    <p class="secao2esqsituacao">Disponível</p>
-                </div>
-            <div class="secao2esqbotoes">
-                <button class="secao2esqeditar" type="submit" id="editar"><img src="css/edit.png" alt="Editar Chave" height="35px"></button>
-                <button class="secao2esqapagar" type="submit" id="apagar"><img src="css/lixo.png" alt="Editar Chave" height="35px" width="30px"></button>
-            </div></div>
-            <div class="secao2esqobj">
-                <div class="secao2esqitenstexto">
-                    <h2>001</h2>
-                    <p>Missingno</p>
-                    <p class="secao2esqsituacao">Disponível</p>
-                </div>
-            <div class="secao2esqbotoes">
-                <button class="secao2esqeditar" type="submit" id="editar"><img src="edit.png" alt="Editar Chave" height="35px"></button>
-                <button class="secao2esqapagar" type="submit" id="apagar"><img src="lixo.png" alt="Editar Chave" height="35px" width="30px"></button>
-            </div></div>
-            <div class="secao2esqobj">
-                <div class="secao2esqitenstexto">
-                    <h2>001</h2>
-                    <p>Missingno</p>
-                    <p class="secao2esqsituacao">Disponível</p>
-                </div>
-            <div class="secao2esqbotoes">
-                <button class="secao2esqeditar" type="submit" id="editar"><img src="edit.png" alt="Editar Chave" height="35px"></button>
-                <button class="secao2esqapagar" type="submit" id="apagar"><img src="lixo.png" alt="Editar Chave" height="35px" width="30px"></button>
-            </div></div>
+    <div class="secao2esqheader">
+        <h2>Gerenciar Chaves</h2>
+        <a href="adicionar_chave.php" class="secao2esqheaderbotao"><b>+ Adicionar Chave</b></a>
+    </div>
 
+    <div class="secao2esqitens">
+        <?php
+            // Buscar todas as chaves
+            $sqlChaves = "SELECT id_chave, codigo_chave, descricao, situacao FROM chaves ORDER BY codigo_chave ASC";
+
+            $stmtChaves = $dbh->query($sqlChaves);
+            $chaves = $stmtChaves->fetchAll(PDO::FETCH_ASSOC);
+        ?>
+
+        <?php if(!empty($chaves)): ?>
+            <?php foreach($chaves as $ch): ?>
+                <div class="secao2esqobj">
+                    <div class="secao2esqitenstexto">
+                        <h2><?= htmlspecialchars($ch['codigo_chave']) ?></h2>
+                        <p><?= htmlspecialchars($ch['descricao']) ?></p>
+                        <p class="secao2esqsituacao"><?= htmlspecialchars($ch['situacao']) ?></p>
+                    </div>
+                    <div class="secao2esqbotoes">
+                        <form action="editar_chave.php" method="GET" style="display:inline;">
+                            <input type="hidden" name="id_chave" value="<?= $ch['id_chave'] ?>">
+                            <button class="secao2esqeditar" type="submit">
+                                <img src="css/edit.png" alt="Editar Chave" height="35px">
+                            </button>
+                        </form>
+                        <form action="src/deletar_chave.php" method="POST" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja apagar esta chave?');">
+                            <input type="hidden" name="id_chave" value="<?= $ch['id_chave'] ?>">
+                            <button class="secao2esqapagar" type="submit">
+                                <img src="css/lixo.png" alt="Apagar Chave" height="35px" width="30px">
+                            </button>
+                        </form>
+                    </div>
                 </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>Nenhuma chave cadastrada.</p>
+        <?php endif; ?>
+    </div>
+</div>
+
                 
         </div>
-        <div class="secao2dir">
-            <h2>Últimos Empréstimos</h2>
-           <div class="secao2dirobjarea">
-            <div class="secao2dirobj">
-                <div class="secao2dirobjheader">
-                    <h2>numchave</h2><div>
-                    
+        <h2>Últimos Empréstimos</h2>
+    <div class="secao2dirobjarea">
+        <?php if(!empty($historico)): ?>
+            <?php foreach($historico as $h): ?>
+                <div class="secao2dirobj">
+                    <div class="secao2dirobjheader">
+                        <h2><?= htmlspecialchars($h['codigo_chave']) ?></h2>
+                    </div>
+                    <div>
+                        <p><?= htmlspecialchars($h['descricao']) ?></p>
+                        <p><?= htmlspecialchars($nome)?>: <b><?= htmlspecialchars($h['usuario']) ?></b></p>
+                        <br>
+                        <p><b>Emprestada:</b> <?= $h['emprestada'] ?></p>
+                        <p><b>Devolvida:</b> <?= $h['devolvida'] ?? 'Ainda não devolvida' ?></p>
+                    </div>
+                    <p class="secao2dirobjheaderdevol">
+                        <?= $h['devolvida'] ? 'Devolvida' : 'Ativa' ?>
+                    </p>
                 </div>
-                </div>
-                <div class="secao2dirobjtexto">
-                <p>exemplar2</p>
-                <p>Porteiro: <b>Missingno2</b></p>
-                <br>
-                <p>Sala: <b>01</b></p>
-                <p><b>Emprestada:</b> dd-mm-aaaa, 00:00:00<br><b>Devolvida:</b> dd-mm-aaaa, 00:00:00</p>
-            </div>
-                <p class="secao2dirobjheaderdevol">Devolvida</p>
-            </div>
-            <div class="secao2dirobj">
-                <div class="secao2dirobjheader">
-                    <h2>numchave</h2><div>
-                    
-                </div>  
-                </div>
-                <div secao2dirobjtexto>
-                <p>exemplar2</p>
-                <p>Porteiro: <b>Missingno2</b></p>
-                <br>
-                <p>Sala: <b>01</b></p>
-                <p><b>Emprestada:</b> dd-mm-aaaa, 00:00:00<br><b>Devolvida:</b> dd-mm-aaaa, 00:00:00</p>
-                <p class="secao2dirobjheaderdevol">Devolvida</p>
-            </div></div>
-        </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>Nenhum empréstimo registrado ainda.</p>
+        <?php endif; ?>
+    </div>
+</div>
     </section>
 </body>
 </html>

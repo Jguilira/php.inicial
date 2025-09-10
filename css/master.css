@@ -2,8 +2,8 @@
 
 *{
     margin: 0;
-    border: 1px solid red;
     font-family: 'IBM Plex Sans';
+    border: 1px solid red;
 }
 
 input{
@@ -12,7 +12,7 @@ input{
     border-radius: 10px;
     background: linear-gradient(180deg,rgba(168, 168, 168, 1) 0%, rgb(233, 233, 233) 23%);
     font-size: 12pt;
-    font-weight: regular;
+    font-weight: 500;
 }
 
 select{
@@ -57,11 +57,11 @@ select{
     text-align: end;
 }
 
-.headerdirimg{
+.headerdirimg img {
     display: flex;
-    img{border-radius: 12px;
-    border: 2px solid #202020;}
+    border: 2px solid #202020;
 }
+
 
 .secao1{
     display: flex;
@@ -142,7 +142,7 @@ select{
     padding:1%;
     text-align: center;
     color: white;
-    font-weight: regular;
+    font-weight: 500;
     border-radius: 10px;
     border: 2px solid #050689;
     align-self:center;
@@ -172,7 +172,7 @@ select{
     padding:2%;
     text-align: center;
     color: white;
-    font-weight: regular;
+    font-weight: 500;
     border-radius: 10px;
     border: 2px solid #050689;
     align-self:center;
@@ -187,7 +187,7 @@ select{
 
 .secao2dir{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-between;
     padding:1.5%;
     border: 2px solid #6e6e6e;
@@ -199,9 +199,9 @@ select{
 .secao2dirobjarea{
     display:flex;
     flex-direction: column;
+    width: 100%;
     height:44vh;
     justify-content: space-around;
-    overflow-y: auto;
 }
 
 
@@ -213,7 +213,7 @@ select{
     border-radius: 10px;
     background: linear-gradient(180deg,rgba(168, 168, 168, 1) 0%, rgb(233, 233, 233) 23%);
     font-size: 9pt;
-    font-weight: regular;
+    font-weight: 500;
     margin-bottom: 1%;
 }
 
@@ -259,7 +259,7 @@ select{
     border-radius: 10px;
     background: linear-gradient(180deg,rgba(168, 168, 168, 1) 0%, rgb(233, 233, 233) 23%);
     font-size: 9pt;
-    font-weight: regular;
+    font-weight: 500;
     margin-bottom: 1%;
 }
 
@@ -268,7 +268,7 @@ select{
     width: 50px;
     padding:1%;
     color: white;
-    font-weight: regular;
+    font-weight: 500;
     border-radius: 10px;
     border: 2px solid #050689;
     transition: all 0.1s ease-in-out;
@@ -285,7 +285,7 @@ select{
     width: 50px;
     padding:1%;
     color: white;
-    font-weight: regular;
+    font-weight: 500;
     border-radius: 10px;
     border: 2px solid #890505;
     transition: all 0.1s ease-in-out;
@@ -302,7 +302,7 @@ select{
     width: 50%;
     padding:1%;
     color: white;
-    font-weight: regular;
+    font-weight: 500;
     border-radius: 5px;
     border: 2px solid #05891b;
     text-align: center;
