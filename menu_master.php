@@ -9,32 +9,23 @@
 </head>
 <body>
     <?php
-    require_once('config.php');
-    session_start();
-
-    if (!isset($_SESSION['id_usuario'])) {
-        header("Location: login.php");
-        exit();
-    }
-
-    $nome = $_SESSION['nome'];
-    ?>
-    <?php
         require_once('config.php'); 
+        session_start();
+        $nome = $_SESSION['nome'];
 
-         // Total de chaves
+         
         $sqlTotal = "SELECT COUNT(*) as total FROM chaves";
         $total = $dbh->query($sqlTotal)->fetch(PDO::FETCH_ASSOC)['total'];
 
-        // Chaves disponíveis
+        
         $sqlDisponiveis = "SELECT COUNT(*) as disponiveis FROM chaves WHERE situacao = 'Disponível'";
         $disponiveis = $dbh->query($sqlDisponiveis)->fetch(PDO::FETCH_ASSOC)['disponiveis'];
 
-        // Chaves emprestadas
+        
         $sqlEmprestadas = "SELECT COUNT(*) as emprestadas FROM chaves WHERE situacao = 'Emprestada'";
         $emprestadas = $dbh->query($sqlEmprestadas)->fetch(PDO::FETCH_ASSOC)['emprestadas'];
 
-        // Empréstimos ativos (ou seja, movimentações de retirada sem devolução ainda)
+        
         $sqlAtivos = "SELECT COUNT(*) as ativos 
                     FROM movimentacoes m1
                     LEFT JOIN movimentacoes m2 

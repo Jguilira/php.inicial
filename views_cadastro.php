@@ -1,3 +1,9 @@
+    <?php
+        require_once('config.php');
+        session_start();
+        $nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Usuário';
+    ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -16,27 +22,27 @@
             </div>
             <div class="headerdir">
                 <div class="headerdirtexto">
-                <h2>Nome do usuario</h2>
-                <p>Porteiro/Master</p></div>
+                <h2>$nome</h2>
+                <p>Master</p></div>
                 <div class="headerdirimg">
-                    <img src="User.jpg" alt="Foto do usuário" height="60">
+                    <img src="imagens/User.jpg" alt="Foto do usuário" height="60">
                 </div>
             </div>
         </div>
     </header>
-    <form class="formulario" action="src/auth_cadastro.php" method="POST">
+    <form class="formulario" action="src/auth_cadastro.php" method="post">
         <h1 class="formularioheader">Cadastro do Usuário</h1>
         <div class="areacadastro">
-        <input type="text" placeholder="Nome completo" id="nome" name="nome" required>
-        <select name="cargo" id="cargo" required>
-            <option disabled selected>Cargo</option>
+        <input type="text" placeholder="Nome completo" id="nomecompleto" name="nomecompleto" required>
+        <select name="funcao" id="funcao" required>
+            <option disabled selected>Função</option>
             <option value="master">Master</option>
             <option value="porteiro">Porteiro</option>
         </select>
-        <input type="text" maxlength="14" name="cpf" id="cpf" placeholder="CPF" required>
-        <input type="password" minlength="6" name="senha" id="senha" placeholder="senha" required>
-    <p class="formulariotextosenha">A senha precisa ter no mínimo 6 caracteres, um número e um símbolo especial</p></div>
-        <input class="botaocadastrar" type="submit" value="Cadastrar">
+        <input type="text" maxlength="11" minlength="11" name="cpf" id="cpf" placeholder="CPF" required>
+        <input type="password" minlength="8" name="senha" id="senha" placeholder="senha" required>
+    <p class="formulariotextosenha">a senha precisa ter no mínimo 8 caracteres, um número e um símbolo especial</p></div>
+        <input class="botaocadastrar" type="submit" value="Cadastrar" id="cadastrar" name="cadastrar">
     </form>
 </body>
 </html>

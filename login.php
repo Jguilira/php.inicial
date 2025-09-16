@@ -8,27 +8,22 @@
     <title>Pagina inicial</title>
     <link rel="icon" href="css/Senac.png" type="image">
 </head>
-
 <body class="corpo">
-    <form action="src/auth_login.php" method="POST">
+    
+    <form action="src/auth_login.php" method="post">
     <section class="login">
         <div class="loginsecao">
             <div class="loginheader">
                 <div class="logintitulo">
-            <img src="css/Senac.png" height="40">
-            <h2>Sistema Senac</h2>
-        </div>
-        <div class="logintextos">
-            <p class="logindesc">Gerenciador de Chaves</p>
+            <img src="imagens/senacmain.png" height="40">
+            <h1 class="logintitulotexto">Gerenciador de Chaves</h1>
         </div>
     </div>
         
         <div class="loginarea">
-            
-            <p class="loginareatexto">Entre na sua conta</p>
 
             <div class="logindigitar">
-                <input type="text" name="cpf" id="cpf" placeholder="CPF" required>
+                <input type="text" name="cpf" id="cpf" placeholder="CPF" required maxlength="11" minlength="11" >
                 <input type="password" name="senha" id="senha" placeholder="Senha" required>
             <div class="esqueceuasenhasecao">
                 <a href="" class="esqueceuasenha">Esqueceu a senha?</a></div>

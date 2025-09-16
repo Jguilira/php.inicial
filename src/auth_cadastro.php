@@ -18,16 +18,16 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     $req->bindValue(':senha', $senha);
     $req->bindValue(':cargo', $cargo);
     if($req->execute()){
-
         header("location: ../login.php?sucesso=0");
-
+        exit();
     }else{
         header("Location: ..views_cadastro.php?sucesso=1");
+        exit();
     }
 
 }else{
     header("Location: ..views_cadastro.php?sucesso=1");
-    exit;
+    exit();
 }
 
 
